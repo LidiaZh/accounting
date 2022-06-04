@@ -1,6 +1,11 @@
 package accounting.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,7 +19,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "RESPONSIBLE_PERSON")
+@Table(name = "responsible_person")
 public class ResponsiblePerson implements Serializable {
 
     @Id
@@ -27,16 +32,18 @@ public class ResponsiblePerson implements Serializable {
     @Column(name = "surname")
     private String surname;
 
-    @OneToMany(mappedBy = "responsiblePerson")
+    @OneToMany(mappedBy = "responsiblePerson", fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<Equipment> equipment
             = new HashSet<>();
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @ToString.Exclude
     @JoinColumn(name = "branch_id")
     private Branch branch;
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @ToString.Exclude
     @JoinColumn(name = "department_id")
     private Department department;
 

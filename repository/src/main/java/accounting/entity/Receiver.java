@@ -4,9 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import net.bytebuddy.implementation.bind.annotation.Super;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -22,7 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name ="RECEIVER")
+@Table(name ="receiver")
 public class Receiver extends Organization implements Serializable {
 
     @OneToMany(mappedBy = "receiver")
@@ -30,10 +28,11 @@ public class Receiver extends Organization implements Serializable {
 
     @Override
     public String toString() {
-        return "Branch{" +
+        return "Receiver{" +
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", address='" + getAddress() + '\'' +
+                ", contact='" + getContact() + '\'' +
                 ", phone='" + getPhone() + '\'' +
                 '}';
     }
@@ -45,12 +44,13 @@ public class Receiver extends Organization implements Serializable {
         Receiver that = (Receiver) object;
         return Objects.equals(getId(), that.getId())
                 && Objects.equals(getName(), that.getName())
+                && Objects.equals(getContact(), that.getContact())
                 && Objects.equals(getAddress(), that.getAddress())
                 && Objects.equals(getPhone(), that.getPhone());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAddress(), getPhone());
+        return Objects.hash(getId(), getName(), getContact(), getAddress(), getPhone());
     }
 }

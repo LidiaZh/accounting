@@ -14,15 +14,4 @@ public class EntityDaoImplInvoice extends EntityDaoImpl<Invoice> {
     public EntityDaoImplInvoice() {
         super(Invoice.class);
     }
-
-//    public Float getPriceForDepriciation(Integer id) {
-//        em = HibernateUtil.getEntityManager();
-//        String queryString = "SELECT i.price FROM Invoice i WHERE i.id = " + id;
-//        Query query = em.createQuery(queryString);
-//        Float price = (Float) query.getSingleResult();
-//        System.out.println(price);
-//        em.close();
-//        return price;
-//    }
-
 }

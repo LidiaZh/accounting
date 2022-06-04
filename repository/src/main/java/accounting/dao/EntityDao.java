@@ -10,12 +10,6 @@ public interface EntityDao {
     <T> void insert(T object);
 
     /**
-     * Method to delete object
-     */
-    <T> void delete(T object) throws InvocationTargetException,
-            NoSuchMethodException, IllegalAccessException;
-
-    /**
      * Method to delete object by ID
      */
     void deleteById(Integer id) throws InvocationTargetException,
@@ -29,7 +23,7 @@ public interface EntityDao {
     /**
      * Method to get information about the object.
      */
-    List select();
+    <T> List<T> select();
 
     /**
      * Method to get Entity

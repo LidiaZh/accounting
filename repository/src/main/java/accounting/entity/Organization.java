@@ -1,13 +1,16 @@
 package accounting.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
 
 @SuperBuilder
 @NoArgsConstructor
@@ -20,11 +23,14 @@ public class Organization implements Serializable {
     @GeneratedValue
     private Integer id;
 
-    @Column(name = "name",unique = true)
+    @Column(name = "name")
     private String name;
 
     @Column(name = "address")
     private String address;
+
+    @Column(name = "contact")
+    private String contact;
 
     @Column(name = "phone")
     private String phone;

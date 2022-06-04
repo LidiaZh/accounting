@@ -3,13 +3,9 @@ package accounting.entity;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -17,12 +13,21 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "BRANCH")
+@Table(name = "branch")
 public class Branch extends Organization implements Serializable {
 
-    @OneToMany(mappedBy = "branch")
+    @OneToMany(mappedBy = "branch", fetch = FetchType.EAGER)
     private Set<ResponsiblePerson> responsiblePerson = new HashSet<>();
 
+
+    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinTable(name = "department_branch",
+            joinColumns = {@JoinColumn(name = "id_branch")},
+            inverseJoinColumns = {@JoinColumn(name = "id_department")}
+    )
+    @ToString.Exclude
+    @Builder.Default
+    private Set<Department> department = new HashSet<>();
 
     @Override
     public String toString() {
@@ -30,6 +35,7 @@ public class Branch extends Organization implements Serializable {
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", address='" + getAddress() + '\'' +
+                ", contact='" + getContact() + '\'' +
                 ", phone='" + getPhone() + '\'' +
                 '}';
     }
@@ -42,11 +48,12 @@ public class Branch extends Organization implements Serializable {
         return Objects.equals(getId(), that.getId())
                 && Objects.equals(getName(), that.getName())
                 && Objects.equals(getAddress(), that.getAddress())
+                && Objects.equals(getContact(), that.getContact())
                 && Objects.equals(getPhone(), that.getPhone());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAddress(), getPhone());
+        return Objects.hash(getId(), getName(), getContact(), getAddress(), getPhone());
     }
 }

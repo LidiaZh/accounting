@@ -1,10 +1,21 @@
 package accounting.entity;
 
-import lombok.*;
-import org.hibernate.annotations.Formula;
-import org.hibernate.annotations.GenericGenerator;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -16,7 +27,7 @@ import java.util.Objects;
 @Setter
 @ToString
 @Entity
-@Table(name = "EQUIPMENT")
+@Table(name = "equipment")
 public class Equipment implements Serializable {
 
     @Id
@@ -32,12 +43,11 @@ public class Equipment implements Serializable {
     @Column(name = "start_date")
     private LocalDate start_date;
 
-//    @Formula("(SELECT i.price FROM INVOICE i WHERE i.id = id)")
-    @Column(name = "depreciation")
-    private float depreciation;
-
     @Column(name = "serial_number",unique = true)
     private String s_number;
+
+    @Column(name = "price")
+    private float price;
 
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "equip_detail_id")
@@ -57,7 +67,6 @@ public class Equipment implements Serializable {
         if (object == null || getClass() != object.getClass()) return false;
         Equipment equipment = (Equipment) object;
         return account_number == equipment.account_number
-                && Float.compare(equipment.depreciation, depreciation) == 0
                 && Objects.equals(id, equipment.id)
                 && Objects.equals(status, equipment.status)
                 && Objects.equals(start_date, equipment.start_date)
@@ -67,6 +76,6 @@ public class Equipment implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, account_number,
-                status, start_date, depreciation, s_number);
+                status, start_date, s_number);
     }
 }

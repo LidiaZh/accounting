@@ -1,6 +1,11 @@
 package accounting.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,8 +20,8 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "INVOICE",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"number","date"}))
+@Table(name = "invoice",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"number", "date"}))
 public class Invoice implements Serializable {
 
     @Id
@@ -32,9 +37,6 @@ public class Invoice implements Serializable {
     @Column(name = "cause")
     private String cause;
 
-    @Column(name = "price")
-    private float price;
-
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
@@ -43,7 +45,7 @@ public class Invoice implements Serializable {
     @JoinColumn(name = "receiver_id")
     private Receiver receiver;
 
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<Equipment> equipment = new HashSet<>();
 
@@ -54,13 +56,12 @@ public class Invoice implements Serializable {
         Invoice invoice = (Invoice) object;
         return id == invoice.id
                 && number == invoice.number
-                && Float.compare(invoice.price, price) == 0
                 && Objects.equals(date, invoice.date)
                 && Objects.equals(cause, invoice.cause);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, date, cause, price);
+        return Objects.hash(id, number, date, cause);
     }
 }

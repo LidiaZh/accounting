@@ -36,7 +36,6 @@ public class Utils {
                 .number(number)
                 .date(LocalDate.of(YEAR_OF_INVOICE, MONTH_OF_INVOICE, DAY_OF_INVOICE))
                 .cause(CAUSE_FOR_INVOICE)
-                .price(PRICE)
                 .receiver(receiver)
                 .supplier(supplier)
                 .build();
@@ -47,7 +46,6 @@ public class Utils {
                 .number(number)
                 .date(LocalDate.of(YEAR_OF_INVOICE, MONTH_OF_INVOICE, DAY_OF_INVOICE))
                 .cause(CAUSE_FOR_INVOICE)
-                .price(PRICE)
                 .build();
     }
 
@@ -90,8 +88,8 @@ public class Utils {
         return ResponsiblePerson.builder()
                 .name(name)
                 .surname(SURNAME_OF_RESPONSIBLE_PERSON)
-                .branch(branch)
-                .department(department)
+//                .branch(branch)
+//                .department(department)
                 .build();
     }
 

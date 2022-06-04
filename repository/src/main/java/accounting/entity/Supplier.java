@@ -1,6 +1,9 @@
 package accounting.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
@@ -17,7 +20,7 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name = "SUPPLIER")
+@Table(name = "supplier")
 public class Supplier extends Organization implements Serializable {
 
     @OneToMany(mappedBy = "supplier")
@@ -25,13 +28,15 @@ public class Supplier extends Organization implements Serializable {
 
     @Override
     public String toString() {
-        return "Branch{" +
+        return "Supplier{" +
                 "id=" + getId() +
                 ", name='" + getName() + '\'' +
                 ", address='" + getAddress() + '\'' +
+                ", contact='" + getContact() + '\'' +
                 ", phone='" + getPhone() + '\'' +
                 '}';
     }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) return true;
@@ -39,12 +44,13 @@ public class Supplier extends Organization implements Serializable {
         Supplier that = (Supplier) object;
         return Objects.equals(getId(), that.getId())
                 && Objects.equals(getName(), that.getName())
+                && Objects.equals(getContact(), that.getContact())
                 && Objects.equals(getAddress(), that.getAddress())
                 && Objects.equals(getPhone(), that.getPhone());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getAddress(), getPhone());
+        return Objects.hash(getId(), getName(), getContact(), getAddress(), getPhone());
     }
 }

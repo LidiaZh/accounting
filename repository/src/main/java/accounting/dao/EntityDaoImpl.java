@@ -8,7 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.List;
 
-public class EntityDaoImpl <T> implements EntityDao {
+public class EntityDaoImpl<T> implements EntityDao {
     private static EntityManager em;
     private final Class<T> clazz;
 
@@ -33,21 +33,6 @@ public class EntityDaoImpl <T> implements EntityDao {
         } finally {
             em.close();
         }
-    }
-
-    /**
-     * Method to delete object
-     *
-     * @param object
-     * @param <T>
-     * @throws InvocationTargetException
-     * @throws NoSuchMethodException
-     * @throws IllegalAccessException
-     */
-    @Override
-    public <T> void delete(T object) throws InvocationTargetException,
-            NoSuchMethodException, IllegalAccessException {
-        deleteById(getIdOfObject(object));
     }
 
     /**
@@ -98,11 +83,11 @@ public class EntityDaoImpl <T> implements EntityDao {
      * Method to get information about the object
      */
     @Override
-    public List<?> select() {
+    public List<T> select() {
         em = HibernateUtil.getEntityManager();
         String queryString = "SELECT e FROM " + clazz.getSimpleName() + " e";
         Query query = em.createQuery(queryString);
-        List<?> list = query.getResultList();
+        List<T> list = query.getResultList();
         list.forEach(System.out::println);
         em.close();
         return list;
@@ -119,17 +104,5 @@ public class EntityDaoImpl <T> implements EntityDao {
         em.getTransaction().commit();
         em.close();
         return obj;
-    }
-
-    /**
-     * Find "ID" of Object
-     */
-    private <T> Integer getIdOfObject(T object)
-            throws NoSuchMethodException, InvocationTargetException,
-            IllegalAccessException {
-        Method method = object.getClass().getMethod("getId");
-        Integer id = (Integer) method.invoke(object);
-        System.out.println("id= " + id);
-        return id;
     }
 }
