@@ -44,8 +44,14 @@
     <button class="btn success"><a href="${eqDetailAddUrl}">Добавить Оборудование</a></button>
 </p>
 <br><br>
+<p>
+    <c:url value="equipment" var="equipmentUrl">
+    </c:url>
+    <button class="btn success"><a href="${equipmentUrl}">Список Оборудование</a></button>
+</p>
+<br><br>
 <table id="customers">
-    <caption><h1>Список Оборудования</h1></caption>
+    <caption><h1>Список Типов Оборудования</h1></caption>
     <thead>
     <tr>
         <th>№</th>
@@ -90,8 +96,8 @@
     </c:forEach>
     </tbody>
 </table>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

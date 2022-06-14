@@ -7,17 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Builder
@@ -34,7 +28,7 @@ public class Equipment implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "account_number",unique = true)
+    @Column(name = "account_number", unique = true)
     private int account_number;
 
     @Column(name = "status")
@@ -43,22 +37,28 @@ public class Equipment implements Serializable {
     @Column(name = "start_date")
     private LocalDate start_date;
 
-    @Column(name = "serial_number",unique = true)
+    @Column(name = "serial_number", unique = true)
     private String s_number;
 
     @Column(name = "price")
     private float price;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "equip_detail_id")
     private EquipmentDetail equipmentDetail;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "invoice_id")
-    private Invoice invoice;
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
+    @JoinTable(name = "equipment_invoice",
+            joinColumns = {@JoinColumn(name = "equipment_id")},
+            inverseJoinColumns = {@JoinColumn(name = "invoice_id")}
+    )
+    @ToString.Exclude
+    @Builder.Default
+    private List<Invoice> invoice = new ArrayList<>();
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "res_person_id")
+    @ToString.Exclude
     private ResponsiblePerson responsiblePerson;
 
     @Override
@@ -70,12 +70,13 @@ public class Equipment implements Serializable {
                 && Objects.equals(id, equipment.id)
                 && Objects.equals(status, equipment.status)
                 && Objects.equals(start_date, equipment.start_date)
+                && Objects.equals(price, equipment.price)
                 && Objects.equals(s_number, equipment.s_number);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, account_number,
-                status, start_date, s_number);
+                status, start_date, price, s_number);
     }
 }

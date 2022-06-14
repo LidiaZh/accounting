@@ -9,9 +9,7 @@ import accounting.entity.ResponsiblePerson;
 import dto.RPersonDto;
 import managment.interfaces.ResPersonService;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class ResPersonServiceImpl
@@ -88,5 +86,4 @@ public class ResPersonServiceImpl
         rPerson.setBranch(daoImplBranch.getEntity(idBranch));
         daoImplResPerson.update(rPerson);
     }
-
 }

@@ -35,7 +35,11 @@
     <a href="about">Контакты</a>
 </div>
 <br><br>
-<button class="btn success"><a href="<c:url value="/rPerson-form.jsp?action=add"/>">Добавить МОЛ</a></button>
+<form name="add" method="post" action="rPerson">
+    <input name="action" type="hidden" value="getBranchDtoForRPerson">
+    <input name="action_2" type="hidden" value="add">
+    <button class="btn success">Добавить</button>
+</form>
 <br><br>
 
 <table id="customers">
@@ -47,7 +51,7 @@
         <th>Имя</th>
         <th>Отдел</th>
         <th>Филиал</th>
-        <th colspan="3">Действия</th>
+        <th colspan="3"></th>
     </tr>
     </thead>
     <tbody>
@@ -77,34 +81,25 @@
                         <c:param name="idRPerson" value="${rPersonDto.id}"/>
                         <c:param name="surname" value="${rPersonDto.surname}"/>
                         <c:param name="name" value="${rPersonDto.name}"/>
-                        <%--                        <c:param name="branchName" value="${rPersonDto.branchName}"/>--%>
-                        <%--                        <c:param name="departmentName" value="${rPersonDto.departmentName}"/>--%>
                         <c:param name="action" value="delete"/>
                     </c:url>
                     <a href="${deleteRPerson}">Удалить</a>
                 </form>
             </td>
             <td>
-                <form name="editDepartmentAndBranch" method="post" action="rPerson-form.jsp">
-                    <c:url value="/rPerson-form.jsp" var="editDepartmentAndBranch">
-                        <c:param name="idRPerson" value="${rPersonDto.id}"/>
-                        <c:param name="surname" value="${rPersonDto.surname}"/>
-                        <c:param name="name" value="${rPersonDto.name}"/>
-                        <c:param name="idBranch" value="${rPersonDto.idBranch}"/>
-                        <c:param name="branchName" value="${rPersonDto.branchName}"/>
-                        <c:param name="idDepartment" value="${rPersonDto.idDepartment}"/>
-                        <c:param name="departmentName" value="${rPersonDto.departmentName}"/>
-                        <c:param name="action" value="editDepartmentAndBranch"/>
-                    </c:url>
-                    <a href="${editDepartmentAndBranch}">Изменить подразделение</a>
+                <form name="add" method="post" action="rPerson">
+                    <input name="action" type="hidden" value="getBranchDtoForRPerson">
+                    <input name="action_2" type="hidden" value="editDepartmentAndBranch">
+                    <input name="idRPerson" type="hidden" value="${rPersonDto.id}">
+                    <button class="btn success">Изменить подразделение</button>
                 </form>
             </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

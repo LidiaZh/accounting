@@ -1,9 +1,9 @@
 <%--
-  Created by IntelliJ IDEA.
-  User: Lidia
-  Date: 03.06.2022
-  Time: 13:38
-  To change this template use File | Settings | File Templates.
+Created by IntelliJ IDEA.
+User: Lidia
+Date: 03.06.2022
+Time: 13:38
+To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -34,18 +34,19 @@
     <a href="rPerson">МОЛ</a>
     <a href="about">Контакты</a>
 </div>
+<br>
+<form name="add" method="post" action="invoice">
+    <input name="action" type="hidden" value="getInvoiceForAction">
+    <input name="action_2" type="hidden" value="add">
+    <button class="btn success">Добавить Накладную</button>
+</form>
 <br><br>
-<c:url value="/invoice-form.jsp" var="invoiceAddUrl">
-    <c:param name="action" value="add"/>
-</c:url>
-<button class="btn success"><a href="${invoiceAddUrl}">Выписать Накладную</a></button>
-<br><br>
-<p>
-    <c:url value="/invoice-form.jsp" var="invoiceNewAddUrl">
-        <c:param name="action" value="add"/>
-    </c:url>
-    <button class="btn success"><a href="${invoiceAddUrl}">Ввести Накладную</a></button>
-</p>
+<form name="new" method="post" action="invoice">
+    <input name="action" type="hidden" value="getInvoiceForAction">
+    <input name="action_2" type="hidden" value="new">
+    <button class="btn success">Выписать Накладную</button>
+</form>
+
 <table id="customers">
     <caption><h1>Список Накладных</h1></caption>
     <thead>
@@ -57,7 +58,7 @@
         <th>ГрузоОтправитель</th>
         <th>ГрузоПолучатель</th>
         <th>Оборудование</th>
-        <th colspan="2">Действия</th>
+        <th colspan="2"></th>
     </tr>
     </thead>
     <tbody>
@@ -70,51 +71,33 @@
         <td><c:out value="${invoice.supplierName}"/></td>
         <td><c:out value="${invoice.receiverName}"/></td>
         <td>
-            <table>
-                <tbody>
-                <c:forEach var="equipment" items="${invoice.equipmentList}" varStatus="status1">
-                    <tr>
-                        <td>${status1.index+1}</td>
-                        <td><c:out value="${equipment.equipmentDetail.name}"/></td>
-                        <td><c:out value="${equipment.account_number}"/></td>
-                        <td><c:out value="${equipment.price}"/></td>
-                        <td>
-                            <form name="info" method="post" action="rPerson.jsp">
-                                <c:url value="/rPerson.jsp" var="equipmentInfoUrl">
-                                    <c:param name="idBranch" value="${branch.id}"/>
-                                    <c:param name="name" value="${branch.name}"/>
-                                    <c:param name="actionB" value="info"/>
-                                </c:url>
-                                <a href="${equipmentInfoUrl}">Информация</a>
-                            </form>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+            <form name="info" method="post" action="invoice">
+                <input name="action" type="hidden" value="info">
+                <input name="idInvoice" type="hidden" value="${invoice.id}">
+                <button class="btn success">Отобразить</button>
+            </form>
         </td>
         <td>
-            <form name="edit" method="post" action="invoice-form.jsp">
-                <c:url value="/invoice-form.jsp" var="invoiceEditUrl">
-                    <c:param name="idInvoice" value="${invoice.id}"/>
-                    <c:param name="number" value="${invoice.number}"/>
-                    <c:param name="date" value="${invoice.date}"/>
-                    <c:param name="cause" value="${invoice.cause}"/>
-                    <c:param name="idSupplier" value="${invoice.idSupplier}"/>
-                    <c:param name="supplierName" value="${invoice.supplierName}"/>
-                    <c:param name="idReceiver" value="${invoice.idReceiver}"/>
-                    <c:param name="receiverName" value="${invoice.receiverName}"/>
-                    <c:param name="equipmentList" value="${invoice.equipmentList}"/>
-                    <c:param name="action" value="edit"/>
-                </c:url>
-                <a href="${invoiceEditUrl}">Редактировать</a>
+            <form name="edit" method="post" action="invoice">
+                <input name="action" type="hidden" value="getInvoiceForAction">
+                <input name="action_2" type="hidden" value="edit">
+                <input name="idInvoice" type="hidden" value="${invoice.id}">
+                <button class="btn success">Редактировать</button>
+            </form>
+<%--        </td>--%>
+<%--        <td>--%>
+            <form name="delete" method="post" action="invoice">
+                <input name="action" type="hidden" value="getInvoiceForAction">
+                <input name="action_2" type="hidden" value="delete">
+                <input name="idInvoice" type="hidden" value="${invoice.id}">
+                <button class="btn success">Удалить</button>
             </form>
         </td>
         </c:forEach>
     </tbody>
 </table>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

@@ -35,5 +35,4 @@ public class Organization implements Serializable {
     @Column(name = "phone")
     private String phone;
 
-
 }

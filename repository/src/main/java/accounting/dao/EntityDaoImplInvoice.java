@@ -9,8 +9,6 @@ import java.util.List;
 
 public class EntityDaoImplInvoice extends EntityDaoImpl<Invoice> {
 
-    private static EntityManager em;
-
     public EntityDaoImplInvoice() {
         super(Invoice.class);
     }

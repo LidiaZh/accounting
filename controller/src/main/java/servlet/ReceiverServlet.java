@@ -47,10 +47,10 @@ public class ReceiverServlet extends HttpServlet {
 
     private void addReceiver(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
-        String contact = req.getParameter("contact");
-        String phone = req.getParameter("phone");
+        String name = req.getParameter(NAME_OF_RECEIVER);
+        String address = req.getParameter(ADDRESS_OF_RECEIVER);
+        String contact = req.getParameter(CONTACT_OF_RECEIVER);
+        String phone = req.getParameter(PHONE_OF_RECEIVER);
         organizationService.addReceiver(name, address, contact, phone);
         resp.sendRedirect(RECEIVER_SERVLET);
     }
@@ -58,10 +58,10 @@ public class ReceiverServlet extends HttpServlet {
     private void editReceiver(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         Integer idReceiver = Integer.parseInt(req.getParameter(RECEIVER_ID));
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
-        String contact = req.getParameter("contact");
-        String phone = req.getParameter("phone");
+        String name = req.getParameter(NAME_OF_RECEIVER);
+        String address = req.getParameter(ADDRESS_OF_RECEIVER);
+        String contact = req.getParameter(CONTACT_OF_RECEIVER);
+        String phone = req.getParameter(PHONE_OF_RECEIVER);
         organizationService.updateReceiver(idReceiver, name, address, contact, phone);
         resp.sendRedirect(RECEIVER_SERVLET);
     }

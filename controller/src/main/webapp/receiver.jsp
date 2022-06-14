@@ -50,7 +50,7 @@ To change this template use File | Settings | File Templates.
         <th>Адрес</th>
         <th>Контактное лицо</th>
         <th>Телефон</th>
-        <th colspan="2">Действия</th>
+        <th colspan="2"></th>
     </tr>
     </thead>
     <tbody>
@@ -91,8 +91,8 @@ To change this template use File | Settings | File Templates.
     </c:forEach>
     </tbody>
 </table>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

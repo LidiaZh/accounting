@@ -1,14 +1,20 @@
 package managment.implementation;
 
 import accounting.dao.EntityDaoImplEquipment;
+import accounting.dao.EntityDaoImplEquipmentDetail;
+import accounting.dao.EntityDaoImplInvoice;
+import accounting.dao.EntityDaoImplResponsiblePerson;
+import accounting.entity.Department;
 import accounting.entity.Equipment;
-import accounting.entity.EquipmentDetail;
 import accounting.entity.Invoice;
-import accounting.entity.ResponsiblePerson;
 import dto.EquipmentDto;
 import managment.interfaces.EquipmentService;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class EquipmentServiceImpl implements EquipmentService {
@@ -16,21 +22,31 @@ public class EquipmentServiceImpl implements EquipmentService {
     private final EntityDaoImplEquipment daoImplEquipment
             = new EntityDaoImplEquipment();
 
+    private final EntityDaoImplInvoice daoImplInvoice
+            = new EntityDaoImplInvoice();
+
+    private final EntityDaoImplEquipmentDetail daoImplEqDetail
+            = new EntityDaoImplEquipmentDetail();
+
+    private final EntityDaoImplResponsiblePerson daoImplResPerson
+            = new EntityDaoImplResponsiblePerson();
+
     @Override
     public Equipment addEquipment(Integer account_number,
-                                  String serial_number, String status,
-                                  Invoice invoice, ResponsiblePerson person,
-                                  EquipmentDetail equipmentDetail) {
+                                  String serial_number, String status, Float price,
+                                  Integer idInvoice, Integer idEqDetail) {
+        List<Invoice> invoiceList = new ArrayList<>();
+        invoiceList.add(daoImplInvoice.getEntity(idInvoice));
         Equipment equipment = Equipment.builder()
                 .account_number(account_number)
                 .s_number(serial_number)
                 .status(status)
-                .invoice(invoice)
-                .responsiblePerson(person)
-                .equipmentDetail(equipmentDetail)
+                .price(price)
+                .invoice(invoiceList)
+                .equipmentDetail(daoImplEqDetail.getEntity(idEqDetail))
                 .build();
         daoImplEquipment.insert(equipment);
-        return null;
+        return equipment;
     }
 
     @Override
@@ -39,35 +55,24 @@ public class EquipmentServiceImpl implements EquipmentService {
     }
 
     @Override
-    public void updateEquipment(Integer id,
-                                String serial_number, String status,
-                                Invoice invoice, EquipmentDetail equipmentDetail) {
-        Equipment equipment = getEquipment(id);
-        equipment.setS_number(serial_number);
-        equipment.setStatus(status);
-        equipment.setInvoice(invoice);
-        equipment.setEquipmentDetail(equipmentDetail);
-        daoImplEquipment.update(equipment);
-    }
-
-    @Override
-    public void updateEquipmentAccountNumber(Integer id, Integer account_number) {
-        Equipment equipment = getEquipment(id);
+    public void updateEquipment(Integer idEquipment,
+                                Integer account_number, String s_number,
+                                Integer idEquipmentDetail, String status,
+                                Float price, Integer idInvoice, Integer idInvoiceCurrent,
+                                Integer idResPerson, LocalDate start_date) {
+        Equipment equipment = getEquipment(idEquipment);
+        List<Invoice> invoices = equipment.getInvoice();
+        invoices.remove(daoImplInvoice.getEntity(idInvoiceCurrent));
+        invoices.add(daoImplInvoice.getEntity(idInvoice));
         equipment.setAccount_number(account_number);
+        equipment.setS_number(s_number);
+        equipment.setEquipmentDetail(daoImplEqDetail.getEntity(idEquipmentDetail));
+        equipment.setStatus(status);
+        equipment.setPrice(price);
+        equipment.setStart_date(start_date);
+        equipment.setInvoice(invoices);
+        equipment.setResponsiblePerson(daoImplResPerson.getEntity(idResPerson));
         daoImplEquipment.update(equipment);
-    }
-
-    @Override
-    public void updateEquipmentResponsiblePerson(Integer id,
-                                                 ResponsiblePerson person) {
-        Equipment equipment = getEquipment(id);
-        equipment.setResponsiblePerson(person);
-        daoImplEquipment.update(equipment);
-    }
-
-    @Override
-    public void updateEquipmentStatus(Integer id, String status) {
-        Equipment equipment = getEquipment(id);
     }
 
     @Override
@@ -88,18 +93,15 @@ public class EquipmentServiceImpl implements EquipmentService {
                         .id(equipment.getId())
                         .account_number(equipment.getAccount_number())
                         .s_number(equipment.getS_number())
-                        .invoiceNumber(equipment.getInvoice().getNumber())
+                        .invoiceNumberCurrent(equipment.getInvoice().get((equipment.getInvoice()).size()-1).getNumber())
+                        .idInvoiceCurrent(equipment.getInvoice().get((equipment.getInvoice()).size()-1).getId())
                         .equipmentName(equipment.getEquipmentDetail().getName())
                         .status(equipment.getStatus())
                         .start_date(equipment.getStart_date())
                         .price(equipment.getPrice())
-                        .rPersonSurname(equipment.getResponsiblePerson().getSurname())
-                        .rPersonName(equipment.getResponsiblePerson().getName())
-                        .department(equipment.getResponsiblePerson().getDepartment().getName())
-                        .branch(equipment.getResponsiblePerson().getBranch().getName())
+                        .resPerson(equipment.getResponsiblePerson())
                         .build())
                 .collect(Collectors.toList());
     }
-
 
 }

@@ -1,11 +1,24 @@
 package accounting.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.*;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.Set;
 
 @SuperBuilder
 @AllArgsConstructor
@@ -16,16 +29,15 @@ import java.util.*;
 @Table(name = "branch")
 public class Branch extends Organization implements Serializable {
 
-    @OneToMany(mappedBy = "branch", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "branch")
     private Set<ResponsiblePerson> responsiblePerson = new HashSet<>();
 
 
-    @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinTable(name = "department_branch",
             joinColumns = {@JoinColumn(name = "id_branch")},
             inverseJoinColumns = {@JoinColumn(name = "id_department")}
     )
-    @ToString.Exclude
     @Builder.Default
     private Set<Department> department = new HashSet<>();
 

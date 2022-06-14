@@ -1,7 +1,5 @@
 package dto;
 
-import accounting.entity.EquipmentDetail;
-import accounting.entity.Invoice;
 import accounting.entity.ResponsiblePerson;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -19,13 +17,11 @@ public class EquipmentDto {
     private Integer id;
     private int account_number;
     private String s_number;
-    private Integer invoiceNumber;
+    private Integer invoiceNumberCurrent;
+    private Integer idInvoiceCurrent;
     private String equipmentName;
     private String status;
     private LocalDate start_date;
     private float price;
-    private String rPersonSurname;
-    private String rPersonName;
-    private String department;
-    private String branch;
+    private ResponsiblePerson resPerson;
 }

@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -33,17 +32,14 @@ public class ResponsiblePerson implements Serializable {
     private String surname;
 
     @OneToMany(mappedBy = "responsiblePerson", fetch = FetchType.EAGER)
-    @ToString.Exclude
     private Set<Equipment> equipment
             = new HashSet<>();
 
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @ToString.Exclude
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "branch_id")
     private Branch branch;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @ToString.Exclude
     @JoinColumn(name = "department_id")
     private Department department;
 
@@ -60,5 +56,14 @@ public class ResponsiblePerson implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(id, name, surname);
+    }
+
+    @Override
+    public String toString() {
+        return "ResponsiblePerson{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                '}';
     }
 }

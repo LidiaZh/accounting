@@ -39,7 +39,6 @@
 
 <table id="customers">
     <caption><h1>Список Поставщиков</h1></caption>
-    <br><br>
     <thead>
     <tr>
         <th>№</th>
@@ -47,7 +46,7 @@
         <th>Адрес</th>
         <th>Контактное лицо</th>
         <th>Телефон</th>
-        <th colspan="2">Действия</th>
+        <th colspan="2"></th>
     </tr>
     </thead>
     <tbody>
@@ -76,8 +75,8 @@
     </c:forEach>
     </tbody>
 </table>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

@@ -7,12 +7,13 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @SuperBuilder
 @NoArgsConstructor
@@ -20,11 +21,11 @@ import java.util.Set;
 @Getter
 @Setter
 @Entity
-@Table(name ="receiver")
+@Table(name = "receiver")
 public class Receiver extends Organization implements Serializable {
 
-    @OneToMany(mappedBy = "receiver")
-    private Set<Invoice> invoices = new HashSet<>();
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.EAGER)
+    private List<Invoice> invoices = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -41,16 +42,12 @@ public class Receiver extends Organization implements Serializable {
     public boolean equals(Object object) {
         if (this == object) return true;
         if (object == null || getClass() != object.getClass()) return false;
-        Receiver that = (Receiver) object;
-        return Objects.equals(getId(), that.getId())
-                && Objects.equals(getName(), that.getName())
-                && Objects.equals(getContact(), that.getContact())
-                && Objects.equals(getAddress(), that.getAddress())
-                && Objects.equals(getPhone(), that.getPhone());
+        Organization that = (Receiver) object;
+        return Objects.equals(getId(), that.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getContact(), getAddress(), getPhone());
+        return getClass().hashCode();
     }
 }

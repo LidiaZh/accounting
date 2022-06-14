@@ -88,14 +88,15 @@
         </div>
     </c:when>
 
-    <c:when test="${param.action==\"addInBranch\"}">
+    <c:when test="${action==\"addInBranch\"}">
         <h2>Добавить отдел в состав филиала</h2>
         <div class="container">
             <form name="addInBranch" method="post" action="department_branch">
-                <input name="idBranch" type="hidden" value="${param.idBranch}">
+                <input name="idBranch" type="hidden" value="${idBranch}">
 
                 <label>Название отдела:
-                    <select id="idDepartment" name="idDepartment" required>
+                    <select name="idDepartment" required>
+                        <option></option>
                         <c:forEach var="department" items="${listOfAllDepartments}">
                             <option value="${department.id}">${department.name}</option>
                         </c:forEach>
@@ -120,8 +121,8 @@
         </div>
     </c:when>
 </c:choose>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

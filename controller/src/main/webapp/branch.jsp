@@ -50,7 +50,7 @@
         <th>Контактное лицо</th>
         <th>Телефон</th>
         <th>Информация</th>
-        <th colspan="2">Действия</th>
+        <th colspan="2"></th>
     </tr>
     </thead>
     <tbody>
@@ -61,16 +61,6 @@
             <td><c:out value="${branch.address}"/></td>
             <td><c:out value="${branch.contact}"/></td>
             <td><c:out value="${branch.phone}"/></td>
-            <td>
-                <form name="info" method="post" action="rPerson.jsp">
-                    <c:url value="/rPerson.jsp" var="branchInfoUrl">
-                        <c:param name="idBranch" value="${branch.id}"/>
-                        <c:param name="name" value="${branch.name}"/>
-                        <c:param name="actionB" value="info"/>
-                    </c:url>
-                    <a href="${branchInfoUrl}">Информация</a>
-                </form>
-            </td>
             <td>
                 <form name="edit" method="post" action="branch-form.jsp">
                     <input name="idBranch" type="hidden" value="${branch.id}">
@@ -104,9 +94,9 @@
     </c:forEach>
     </tbody>
 </table>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>
 

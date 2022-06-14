@@ -28,7 +28,7 @@ public class EquipmentDetailServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = req.getParameter(ACTION);
         switch (action) {
             case ADD:
@@ -47,10 +47,10 @@ public class EquipmentDetailServlet extends HttpServlet {
 
     private void addEqDetail(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String name = req.getParameter("name");
-        String desc = req.getParameter("desc");
-        Integer termOfUse = Integer.parseInt(req.getParameter("termOfUse"));
-        String producer = req.getParameter("producer");
+        String name = req.getParameter(NAME_OF_EQUIPMENT_DET);
+        String desc = req.getParameter(DESC_OF_EQUIPMENT_DET);
+        int termOfUse = Integer.parseInt(req.getParameter(TERM_OF_USE_FOR_EQUIPMENT_DET));
+        String producer = req.getParameter(PRODUCER_OF_EQUIPMENT_DET);
         equipmentDetailService.addEquipmentDetail(name, desc, producer, termOfUse);
         resp.sendRedirect(EQUIPMENT_DETAIL_SERVLET);
     }
@@ -58,10 +58,10 @@ public class EquipmentDetailServlet extends HttpServlet {
     private void editEqDetail(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         Integer idEqDetail = Integer.parseInt(req.getParameter(EQ_DETAIL_ID));
-        String name = req.getParameter("name");
-        String desc = req.getParameter("desc");
-        Integer termOfUse = Integer.parseInt(req.getParameter("termOfUse"));
-        String producer = req.getParameter("producer");
+        String name = req.getParameter(NAME_OF_EQUIPMENT_DET);
+        String desc = req.getParameter(DESC_OF_EQUIPMENT_DET);
+        int termOfUse = Integer.parseInt(req.getParameter(TERM_OF_USE_FOR_EQUIPMENT_DET));
+        String producer = req.getParameter(PRODUCER_OF_EQUIPMENT_DET);
         equipmentDetailService.updateEquipmentDetail(idEqDetail, name, desc, producer, termOfUse);
         resp.sendRedirect(EQUIPMENT_DETAIL_SERVLET);
     }
