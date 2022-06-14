@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.io.Serializable;
@@ -23,7 +24,7 @@ import java.util.Set;
 @Table(name = "supplier")
 public class Supplier extends Organization implements Serializable {
 
-    @OneToMany(mappedBy = "supplier")
+    @OneToMany(mappedBy = "supplier", fetch = FetchType.EAGER)
     private Set<Invoice> invoices = new HashSet<>();
 
     @Override
@@ -51,6 +52,7 @@ public class Supplier extends Organization implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getContact(), getAddress(), getPhone());
+        return Objects.hash(getId(), getName(), getContact(),
+                getAddress(), getPhone());
     }
 }

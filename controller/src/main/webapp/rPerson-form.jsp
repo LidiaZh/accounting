@@ -37,7 +37,7 @@
 </div>
 
 <c:choose>
-    <c:when test="${param.action==\"add\"}">
+    <c:when test="${action==\"add\"}">
         <h2>Добавить МОЛ</h2>
         <div class="container">
             <form name="add" method="post" action="rPerson">
@@ -51,7 +51,8 @@
                 </label>
 
                 <label>Филиал:
-                    <select id="idBranch" name="idBranch" required>
+                    <select name="idBranch" required>
+                        <option></option>
                         <c:forEach var="branch" items="${listOfAllBranchDto}">
                             <option value="${branch.id}">${branch.nameBranch}</option>
                         </c:forEach>
@@ -59,7 +60,8 @@
                 </label>
 
                 <label>Отдел:
-                    <select name="idDepartment">
+                    <select name="idDepartment" required>
+                        <option></option>
                         <c:forEach var="department" items="${listOfAllDepartments}">
                             <option value="${department.id}">${department.name}</option>
                         </c:forEach>
@@ -74,7 +76,6 @@
 
     <c:when test="${param.action==\"edit\"}">
         <h2>Редактирование данных о МОЛ</h2>
-
         <div class="container">
             <form name="edit" method="post" action="rPerson">
                 <input name="idRPerson" type="hidden" value="${param.idRPerson}">
@@ -123,23 +124,23 @@
         </div>
     </c:when>
 
-    <c:when test="${param.action==\"editDepartmentAndBranch\"}">
+    <c:when test="${action==\"editDepartmentAndBranch\"}">
         <h2>Перевод в другое подразделение</h2>
         <div class="container">
             <form name="add" method="post" action="rPerson">
-                <input name="idRPerson" type="hidden" value="${param.idRPerson}">
+                <input name="idRPerson" type="hidden" value="${rPersonDto.id}">
 
                 <label>Фамилия:
-                    <input type="text" name="surname" disabled value="${param.surname}">
+                    <input type="text" name="surname" disabled value="${rPersonDto.surname}">
                 </label>
 
                 <label>Имя:
-                    <input type="text" name="name" disabled value="${param.name}">
+                    <input type="text" name="name" disabled value="${rPersonDto.name}">
                 </label>
 
                 <label>Филиал:
-                    <select name="idBranch">
-
+                    <select name="idBranch" required>
+                        <option value="${rPersonDto.branch.id}">${rPersonDto.branch.name}</option>
                         <c:forEach var="branch" items="${listOfAllBranchDto}">
                             <option value="${branch.id}">${branch.nameBranch}</option>
                         </c:forEach>
@@ -147,8 +148,8 @@
                 </label>
 
                 <label>Отдел:
-                    <select name="idDepartment">
-                            <%--                    <option selected>${param.departmentName}</option>--%>
+                    <select name="idDepartment" required>
+                        <option value="${rPersonDto.department.id}">${rPersonDto.department.name}</option>
                         <c:forEach var="department" items="${listOfAllDepartments}">
                             <option value="${department.id}">${department.name}</option>
                         </c:forEach>
@@ -161,8 +162,9 @@
         </div>
     </c:when>
 </c:choose>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

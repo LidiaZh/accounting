@@ -70,8 +70,9 @@
         <div class="container">
             <form name="edit" method="post" action="receiver">
                 <input name="idReceiver" type="hidden" value="${param.idReceiver}">
-                <label for="name1">Название организации:</label>
-                <input type="text" id="name1" name="name" value="${param.name}">
+
+                <label>Название организации:</label>
+                <input type="text" name="name" value="${param.name}">
 
                 <label>Адрес:
                     <input type="text" name="address" value="${param.address}">
@@ -120,8 +121,8 @@
         </div>
     </c:when>
 </c:choose>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

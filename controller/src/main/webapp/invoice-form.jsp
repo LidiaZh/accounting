@@ -39,33 +39,35 @@
 </div>
 
 <c:choose>
-    <c:when test="${param.action==\"add\"}">
+    <c:when test="${action==\"add\"}">
         <h2>Добавить Накладную</h2>
 
         <div class="container">
             <form name="add" method="post" action="invoice">
-                <label>Номер:
-                    <input type="text" name="number" required placeholder="Номер">
+                <label>Номер №:
+                    <input type="text" name="number" required placeholder="23545">
                 </label>
 
                 <label>Дата:
-                    <input type="text" name="date" readonly value="<%= LocalDate.now()%>">
+                    <br><input type="date" name="date" required><br><br>
                 </label>
 
                 <label>Основание:
-                    <input type="text" name="cause" required placeholder="Контактное лицо">
+                    <input type="text" name="cause" required placeholder="Договор поставки №135 от 20.05.2021">
                 </label>
 
                 <label>ГрузоОтправитель:
-                    <select id="idSupplier" name="idSupplier" required>
+                    <select name="idSupplier" required>
+                        <option></option>
                         <c:forEach var="supplier" items="${supplierList}">
                             <option value="${supplier.id}">${supplier.name}</option>
                         </c:forEach>
                     </select>
                 </label>
 
-                <label>ГрузоОтправитель:
-                    <select id="idReceiver" name="idReceiver" required>
+                <label>ГрузоПолучатель:
+                    <select name="idReceiver" required>
+                        <option></option>
                         <c:forEach var="receiver" items="${receiverList}">
                             <option value="${receiver.id}">${receiver.name}</option>
                         </c:forEach>
@@ -78,33 +80,81 @@
         </div>
     </c:when>
 
-    <c:when test="${param.action==\"edit\"}">
-        <h2>Редактирование в накладной</h2>
-
+    <c:when test="${action==\"new\"}">
+        <h2>Выписать Накладную</h2>
         <div class="container">
-            <form name="edit" method="post" action="invoice">
-                <input name="idInvoice" type="hidden" value="${param.idInvoice}">
-                <input name="idSupplier" type="hidden" value="${param.idSupplier}">
-                <input name="idReceiver" type="hidden" value="${param.idReceiver}">
-
-                <label>Номер:
-                    <input type="text" name="number" readonly value="${param.number}">
+            <form name="new" method="post" action="invoice">
+                <label>Номер №:
+                    <input type="text" name="number" required placeholder="23545">
                 </label>
 
                 <label>Дата:
-                    <input type="text" name="date" readonly value="${param.date}">
+                    <input type="text" name="date" readonly value="<%= LocalDate.now()%>">
                 </label>
 
                 <label>Основание:
-                    <input type="text" name="cause" value="${param.cause}">
+                    <input type="text" name="cause" required placeholder="Договор поставки №135 от 20.05.2021">
                 </label>
 
                 <label>ГрузоОтправитель:
-                    <input type="text" name="supplierName" value="${param.supplierName}">
+                    <select name="idSupplier" required>
+                        <option></option>
+                        <c:forEach var="supplier" items="${supplierList}">
+                            <option value="${supplier.id}">${supplier.name}</option>
+                        </c:forEach>
+                    </select>
+                </label>
+
+                <label>ГрузоПолучатель:
+                    <select name="idReceiver" required>
+                        <option></option>
+                        <c:forEach var="receiver" items="${receiverList}">
+                            <option value="${receiver.id}">${receiver.name}</option>
+                        </c:forEach>
+                    </select>
+                </label>
+
+                <input name="action" type="hidden" value="new">
+                <button class="btn success">Далее</button>
+            </form>
+        </div>
+    </c:when>
+
+    <c:when test="${action==\"edit\"}">
+        <h2>Редактирование Накладной</h2>
+
+        <div class="container">
+            <form name="edit" method="post" action="invoice">
+                <input name="idInvoice" type="hidden" value="${invoice.id}">
+
+                <label>Номер №:
+                    <input type="text" name="number" readonly value="${invoice.number}">
+                </label>
+
+                <label>Дата:
+                    <input type="text" name="date" readonly value="${invoice.date}">
+                </label>
+
+                <label>Основание:
+                    <input type="text" name="cause" value="${invoice.cause}">
                 </label>
 
                 <label>ГрузоОтправитель:
-                    <input type="text" name="receiverName" value="${param.receiverName}">
+                    <select name="idSupplier">
+                        <option value="${invoice.supplier.id}">${invoice.supplier.name}</option>
+                        <c:forEach var="supplier" items="${supplierList}">
+                            <option value="${supplier.id}">${supplier.name}</option>
+                        </c:forEach>
+                    </select>
+                </label>
+
+                <label>ГрузоПолучатель:
+                    <select name="idReceiver">
+                        <option value="${invoice.receiver.id}">${invoice.receiver.name}</option>
+                        <c:forEach var="receiver" items="${receiverList}">
+                            <option value="${receiver.id}">${receiver.name}</option>
+                        </c:forEach>
+                    </select>
                 </label>
 
                 <input name="action" type="hidden" value="edit">
@@ -113,27 +163,23 @@
         </div>
     </c:when>
 
-    <c:when test="${param.action==\"delete\"}">
-        <h2>Удаление данных о получателе товара</h2>
+    <c:when test="${action==\"delete\"}">
+        <h2>Удаление Накладной</h2>
 
         <div class="container">
-            <form name="delete" method="post" action="branch">
-                <input name="idBranch" type="hidden" value="${param.idBranch}">
+            <form name="delete" method="post" action="invoice">
+                <input name="idInvoice" type="hidden" value="${invoice.id}">
 
-                <label for="name2">Название организации:
-                    <input type="text" id="name2" name="name" disabled value="${param.name}">
+                <label>Номер №:
+                    <input type="text" name="number" disabled value="${invoice.number}">
                 </label>
 
-                <label for="address2">Адрес:
-                    <input type="text" id="address2" name="address" disabled value="${param.address}">
+                <label>Дата:
+                    <input type="text" name="date" disabled value="${invoice.date}">
                 </label>
 
-                <label for="contact2">Контактное лицо:
-                    <input type="text" id="contact2" name="contact" disabled value="${param.contact}">
-                </label>
-
-                <label for="phone2">Телефон:
-                    <input type="text" id="phone2" name="phone" disabled value="${param.phone}">
+                <label>Основание:
+                    <input type="text" name="cause" disabled value="${invoice.cause}">
                 </label>
 
                 <button name="action" type="submit" value="delete">Удалить</button>
@@ -142,8 +188,8 @@
         </div>
     </c:when>
 </c:choose>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

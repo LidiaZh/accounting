@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
+  <properties>
+    <javax.servlet-api.version>4.0.1</javax.servlet-api.version>
+    <jstl.version>1.2</jstl.version>
+    <jsp-api.version>2.0</jsp-api.version>
+  </properties>
+
   <parent>
     <artifactId>accounting</artifactId>
     <groupId>it.academy</groupId>
@@ -23,28 +29,26 @@
       <version>1</version>
       <scope>compile</scope>
     </dependency>
+
     <dependency>
       <groupId>javax.servlet.jsp</groupId>
       <artifactId>jsp-api</artifactId>
-      <version>2.0</version>
+      <version>${jsp-api.version}</version>
       <scope>provided</scope>
     </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>jstl</artifactId>
-      <version>1.2</version>
+      <version>${jstl.version}</version>
     </dependency>
+
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>javax.servlet-api</artifactId>
-      <version>4.0.1</version>
+      <version>${javax.servlet-api.version}</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
 
-  <build>
-    <finalName>controller</finalName>
-  </build>
-
-</project>
+ </project>

@@ -41,7 +41,8 @@ public class Department implements Serializable {
     @Builder.Default
     private Set<Branch> branch = new HashSet<>();
 
-    @OneToMany(mappedBy = "department", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "department", fetch = FetchType.LAZY)
+    @ToString.Exclude
     private Set<ResponsiblePerson> responsiblePerson
             = new HashSet<>();
 

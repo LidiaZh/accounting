@@ -9,6 +9,7 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -43,7 +44,7 @@ public class EquipmentDetail implements Serializable {
     @Column(name = "producer")
     private String producer;
 
-    @OneToMany(mappedBy = "equipmentDetail")
+    @OneToMany(mappedBy = "equipmentDetail", fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<Equipment> equipment = new HashSet<>();
 

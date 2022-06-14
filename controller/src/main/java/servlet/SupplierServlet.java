@@ -21,12 +21,12 @@ public class SupplierServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<Supplier> suppliers = organizationService.getAllSuppliers();
-        req.getSession().setAttribute(LIST_SUPPLIERS, suppliers);
+        req.setAttribute(LIST_OF_SUPPLIERS, suppliers);
         req.getRequestDispatcher(SUPPLIERS_JSP).forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String action = req.getParameter(ACTION);
         switch (action) {
             case ADD:
@@ -45,10 +45,10 @@ public class SupplierServlet extends HttpServlet {
 
     private void addSupplier(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
-        String contact = req.getParameter("contact");
-        String phone = req.getParameter("phone");
+        String name = req.getParameter(NAME_OF_SUPPLIER);
+        String address = req.getParameter(ADDRESS_OF_SUPPLIER);
+        String contact = req.getParameter(CONTACT_OF_SUPPLIER);
+        String phone = req.getParameter(PHONE_OF_SUPPLIER);
         organizationService.addSupplier(name, address, contact, phone);
         resp.sendRedirect(SUPPLIER_SERVLET);
     }
@@ -56,10 +56,10 @@ public class SupplierServlet extends HttpServlet {
     private void editSupplier(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         Integer idSupplier = Integer.parseInt(req.getParameter(SUPPLIER_ID));
-        String name = req.getParameter("name");
-        String address = req.getParameter("address");
-        String contact = req.getParameter("contact");
-        String phone = req.getParameter("phone");
+        String name = req.getParameter(NAME_OF_SUPPLIER);
+        String address = req.getParameter(ADDRESS_OF_SUPPLIER);
+        String contact = req.getParameter(CONTACT_OF_SUPPLIER);
+        String phone = req.getParameter(PHONE_OF_SUPPLIER);
         organizationService.updateSupplier(idSupplier, name, address, contact, phone);
         resp.sendRedirect(SUPPLIER_SERVLET);
     }

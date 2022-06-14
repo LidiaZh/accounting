@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Set;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -19,7 +19,7 @@ public class InvoiceDto {
     private int number;
     private LocalDate date;
     private String cause;
-    private Set<Equipment> equipmentList;
+    private List<Equipment> equipmentList;
     private Integer idReceiver;
     private String receiverName;
     private Integer idSupplier;

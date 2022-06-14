@@ -55,7 +55,7 @@
     <tr>
         <th>№</th>
         <th>Название</th>
-        <th colspan="2">Действия</th>
+        <th colspan="2"></th>
     </tr>
     </thead>
     <tbody>
@@ -83,9 +83,9 @@
     </c:forEach>
     </tbody>
 </table>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>
 

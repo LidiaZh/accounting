@@ -22,7 +22,7 @@ public class DepartmentServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         List<Department> listOfAllDepartments = departmentService.getAllDepartments();
-        req.getSession().setAttribute(LIST_OF_ALL_DEPARTMENTS, listOfAllDepartments);
+        req.setAttribute(LIST_OF_ALL_DEPARTMENTS, listOfAllDepartments);
         req.getServletContext().getRequestDispatcher(DEPARTMENT_JSP).forward(req, resp);
     }
 
@@ -46,7 +46,7 @@ public class DepartmentServlet extends HttpServlet {
 
     private void addDepartment(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
-        String name = req.getParameter(DEPARTMENT_NAME);
+        String name = req.getParameter(NAME_OF_DEPARTMENT);
         departmentService.addDepartment(name);
         resp.sendRedirect(DEPARTMENT_SERVLET);
     }
@@ -54,7 +54,7 @@ public class DepartmentServlet extends HttpServlet {
     private void editDepartment(HttpServletRequest req, HttpServletResponse resp)
             throws IOException {
         Integer idDepartment = Integer.parseInt(req.getParameter(DEPARTMENT_ID));
-        String name = req.getParameter(DEPARTMENT_NAME);
+        String name = req.getParameter(NAME_OF_DEPARTMENT);
         departmentService.updateDepartment(idDepartment, name);
         resp.sendRedirect(DEPARTMENT_SERVLET);
     }

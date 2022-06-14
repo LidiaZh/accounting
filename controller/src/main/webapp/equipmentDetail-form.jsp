@@ -43,19 +43,19 @@
         <div class="container">
             <form name="add" method="post" action="equipmentDetail">
                 <label>Модель оборудования:
-                    <input type="text" name="name" required placeholder="Название">
+                    <input type="text" name="name" required placeholder="Монитор Samsung S24R350FZI">
                 </label>
 
                 <label>Описание:
-                    <input type="text" name="desc" required placeholder="Описание">
+                    <input type="text" name="desc" required placeholder="23.8'', 16:9, 1920x1080, IPS, 75 Гц, AMD FreeSync, интерфейсы HDMI+D-Sub (VGA)">
                 </label>
 
                 <label>Срок использования, лет:
-                    <input type="text" name="termOfUse" required placeholder="Срок использования">
+                    <input type="text" name="termOfUse" required placeholder="5">
                 </label>
 
                 <label>Производитель:
-                    <input type="text" name="producer" required placeholder="Производитель">
+                    <input type="text" name="producer" required placeholder="Samsung">
                 </label>
 
                 <input name="action" type="hidden" value="add">
@@ -122,8 +122,8 @@
         </div>
     </c:when>
 </c:choose>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>

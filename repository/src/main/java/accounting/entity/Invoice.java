@@ -10,9 +10,9 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Builder
 @NoArgsConstructor
@@ -37,17 +37,17 @@ public class Invoice implements Serializable {
     @Column(name = "cause")
     private String cause;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = {CascadeType.MERGE})
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     @JoinColumn(name = "receiver_id")
     private Receiver receiver;
 
-    @OneToMany(mappedBy = "invoice", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "invoice", fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @ToString.Exclude
-    private Set<Equipment> equipment = new HashSet<>();
+    private List<Equipment> equipment = new ArrayList<>();
 
     @Override
     public boolean equals(Object object) {
@@ -64,4 +64,5 @@ public class Invoice implements Serializable {
     public int hashCode() {
         return Objects.hash(id, number, date, cause);
     }
+
 }

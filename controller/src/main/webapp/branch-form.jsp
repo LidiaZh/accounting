@@ -122,9 +122,9 @@
         </div>
     </c:when>
 </c:choose>
-<div class="footer">
-    <h2>it.academy</h2>
-</div>
+<%--<div class="footer">--%>
+<%--    <h2>it.academy</h2>--%>
+<%--</div>--%>
 </body>
 </html>
 

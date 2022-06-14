@@ -130,13 +130,12 @@
                 start_date      date,
                 status          varchar(20),
                 price       float,
-                invoice_id      int,
                 res_person_id   int,
                 equip_detail_id int,
                 constraint equipment_equip_detail_fk
                     foreign key (equip_detail_id) references equipment_detail (id),
-                constraint equipment_invoice_fk
-                    foreign key (invoice_id) references invoice (id),
+--                 constraint equipment_invoice_fk
+--                     foreign key (invoice_id) references invoice (id),
                 constraint equipment_respons_person_fk
                     foreign key (res_person_id) references responsible_person (id)
             );
@@ -155,6 +154,22 @@
                     foreign key (id_branch) references branch (id),
                 constraint department_branch_department_fk
                     foreign key (id_department) references department (id)
+            );
+        </sql>
+    </changeSet>
+
+    <changeSet id="10" author="Lidia Zhibul">
+        <comment>create table department_branch</comment>
+        <sql>
+            create table equipment_invoice
+            (
+                invoice_id int not null,
+                equipment_id  int not null,
+                primary key (invoice_id, equipment_id),
+                constraint equipment_invoice_equipment_fk
+                    foreign key (equipment_id) references equipment (id),
+                constraint equipment_invoice_invoice_fk
+                    foreign key (invoice_id) references invoice (id)
             );
         </sql>
     </changeSet>

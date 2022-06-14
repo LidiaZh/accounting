@@ -1,8 +1,10 @@
 package managment.implementation;
 
+import accounting.dao.EntityDaoImplEquipment;
 import accounting.dao.EntityDaoImplInvoice;
 import accounting.dao.EntityDaoImplReceiver;
 import accounting.dao.EntityDaoImplSupplier;
+import accounting.entity.Equipment;
 import accounting.entity.Invoice;
 import accounting.entity.Receiver;
 import accounting.entity.Supplier;
@@ -24,10 +26,28 @@ public class InvoiceServiceImpl implements InvoiceService {
     private final EntityDaoImplSupplier daoImplSupplier
             = new EntityDaoImplSupplier();
 
+    private final EntityDaoImplEquipment daoImplEquipment
+            = new EntityDaoImplEquipment();
+
     @Override
     public Invoice addInvoice(Integer number, LocalDate date,
                               String cause, Integer idSupplier,
                               Integer idReceiver) {
+        Invoice invoice = Invoice.builder()
+                .number(number)
+                .date(date)
+                .cause(cause)
+                .supplier(daoImplSupplier.getEntity(idSupplier))
+                .receiver(daoImplReceiver.getEntity(idReceiver))
+                .build();
+        daoImplInvoice.insert(invoice);
+        return invoice;
+    }
+
+    @Override
+    public Invoice writeNewInvoice(Integer number, LocalDate date,
+                                   String cause, Integer idSupplier,
+                                   Integer idReceiver) {
         Invoice invoice = Invoice.builder()
                 .number(number)
                 .date(date)
@@ -76,12 +96,26 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public List<?> getAllInvoices() {
+    public List<Invoice> getAllInvoices() {
         return daoImplInvoice.select();
     }
 
     @Override
     public Invoice getInvoice(Integer id) {
         return daoImplInvoice.getEntity(id);
+    }
+
+    @Override
+    public void getEquipmentForInvoice(String[] equipments, Integer idInvoice) {
+        int eqId;
+        Invoice invoice = getInvoice(idInvoice);
+        for (String eq : equipments) {
+            eqId = Integer.parseInt(eq);
+            Equipment equipment = daoImplEquipment.getEntity(eqId);
+            List<Invoice> invoices = equipment.getInvoice();
+            invoices.add(invoice);
+            equipment.setInvoice(invoices);
+            daoImplEquipment.update(equipment);
+        }
     }
 }
